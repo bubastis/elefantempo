@@ -10,9 +10,9 @@ body {
     margin: 0rem auto;
 
 }
-#flex {
-    display: flex;
-    flex-direction: row;
+#counters {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
     gap: 2rem;
 
 }
@@ -22,13 +22,6 @@ h1 {
     font-size: 2rem;
     text-transform:uppercase;
     color: black;
-}
-.chart {
-    width: 50%;
-}
-#list {
-    width: 100%;
-    margin-top: 2rem;
 }
 iframe {
     border-radius: .3rem;
@@ -58,14 +51,11 @@ iframe {
         margin: 2rem 0;
         font-size: 1.6rem;
     }
-    #flex {
-        flex-direction: column;
+    #counters {
+        grid-template-columns: 1fr;
         gap: 1rem;
     }
-    .chart {
-        width: 100%;
-    }
-    #list {
+    #counters:last-child {
         margin: 1rem auto 2rem;
     }
 }
