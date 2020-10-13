@@ -44,18 +44,3 @@ base('Current Data').select({
 }, function done(err) {
     if (err) { console.error(err); return; }
 });
-
-base('Current Data').select({
-
-    view: "Last Week",
-    fields: ["Temperature"]
-
-}).eachPage(function page(records, fetchNextPage) {
-
-    records.forEach(function(record) {
-        console.log(record)
-    });
-
-}, function done(err) {
-    if (err) { console.error(err); return; }
-});
