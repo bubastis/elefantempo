@@ -1,6 +1,6 @@
 # Local Netlify folder
 .netlify
-**/.functions
+**/functions
 
 # Other stuff
 **/yarn.lock
