@@ -1,46 +1,279 @@
-var Airtable = require('airtable');
-var base = new Airtable({apiKey: 'key01ANDl0gk20K6T'}).base('appw1UG1ZgXVUtSJv');
+// Fetch year averages
 
-var maxtemp = document.getElementById("maxtemp");
-var maxtempdate = document.getElementById("maxtempdate");
+fetch('https://api.thingspeak.com/channels/1326754/feeds.json?api_key=Q5OWHXXDO0DFTGCA&results=300')
+  .then(
+    function(response) {
+      if (response.status !== 200) {
+        console.log('Looks like there was a problem. Status Code: ' +
+          response.status);
+        return;
+      }
 
-base('Current Data').select({
+      // Examine the text in the response
+      response.json().then(function(data) {
 
-    view: "All Time",
-    fields: ["Temperature"],
-    sort: [{field: "Temperature", direction: "desc"}],
-    maxRecords: 1
 
-}).eachPage(function page(records, fetchNextPage) {
+        // Get max & min
+        let max = 0;
+        let min = 50;
+        data.feeds.forEach((obj) => {
+            if (obj.field3 > max) {
+                max = obj.field3.slice()
+            }
+            if (obj.field1 < min) {
+                min = obj.field1.slice()
+            }
+        })
 
-    records.forEach(function(record) {
-        maxtemp.innerText = record.fields.Temperature + "ºC";
-        let recordDate = new Date(record._rawJson.createdTime)
-        maxtempdate.innerText = recordDate.getDate() + "/" + (recordDate.getMonth() + 1) + "/" + recordDate.getFullYear();
-    });
+        let minTempArray = data.feeds.find(obj => obj.field1 === min);
+        document.getElementById("mintemp").innerText = min;
+        let minTempDate = new Date (minTempArray["created_at"]);
+        document.getElementById("mintempdate").innerText = minTempDate.getDate() + '/' + (minTempDate.getMonth() + 1) + '/' + minTempDate.getFullYear();
 
-}, function done(err) {
-    if (err) { console.error(err); return; }
-});
+        let maxTempArray = data.feeds.find(obj => obj.field3 === max);
+        document.getElementById("maxtemp").innerText = max;
+        let maxTempDate = new Date (maxTempArray["created_at"]);
+        document.getElementById("maxtempdate").innerText = maxTempDate.getDate() + '/' + (maxTempDate.getMonth() + 1) + '/' + maxTempDate.getFullYear();
+        
+        var tempVar = {
+            "$schema": "https://vega.github.io/schema/vega-lite/v4.json",
+            "title": "Temperature Variation (Year)",
+            "data": {
+                "values": data,
+                "format": {
+                    "type": "json",
+                    "property": "feeds"
+                } 
+            },
+            "width": "container",
+            "height": "container",
+            "actions": false,
+            "mark": {
+                "type": "bar"
+            },
+            "encoding": {
+                "x": {
+                    "field": "created_at",
+                    "title": "Date",
+                    "type": "temporal",
+                },
+                "y": {
+                    "field": "field1",
+                    "title": "Celsius",
+                    "type": "quantitative",
+                    "scale": {"zero": false}
+                },
+                "tooltip": [
+                    {"field": "created_at", "title": "Date", "timeUnit": "yearmonthdate"}, 
+                    {"field": "field3", "title": "Max"}, 
+                    {"field": "field1", "title": "Min"}
+                ]
+            },
+            "layer": [
+                {
+                "mark": {
+                    "type": "bar",
+                    "size": 3,
+                    "color": "red"
+                },
+                "encoding": {
+                    "y2": {"field": "field3"}
+                }
+            }]
+        };
 
-var mintemp = document.getElementById("mintemp");
-var mintempdate = document.getElementById("mintempdate");
+        var humVar = {
+            "$schema": "https://vega.github.io/schema/vega-lite/v4.json",
+            "title": "Humidity Variation (Year)",
+            "data": {
+                "values": data,
+                "format": {
+                    "type": "json",
+                    "property": "feeds"
+                } 
+            },
+            "width": "container",
+            "height": "container",
+            "actions": false,
+            "mark": {
+                "type": "bar",
+                "tooltip": true
+            },
+            "encoding": {
+                "x": {
+                    "field": "created_at",
+                    "title": "Date",
+                    "type": "temporal",
+                },
+                "y": {
+                    "field": "field4",
+                    "title": "Percentage",
+                    "type": "quantitative",
+                    "scale": {"zero": false}
+                },
+                "tooltip": [
+                    {"field": "created_at", "title": "Date", "timeUnit": "yearmonthdate"}, 
+                    {"field": "field6", "title": "Max RH (%)"}, 
+                    {"field": "field4", "title": "Min RH (%)"}
+                ]
+            },
+            "layer": [
+                {
+                "mark": {
+                    "type": "bar",
+                    "size": 3,
+                    "color": "blue"
+                },
+                "encoding": {
+                    "y2": {"field": "field6"}
+                }
+            }]
+        };
 
-base('Current Data').select({
+        vegaEmbed('#humvar', humVar);
 
-    view: "All Time",
-    fields: ["Temperature"],
-    sort: [{field: "Temperature", direction: "asc"}],
-    maxRecords: 1
+        vegaEmbed('#tempvar', tempVar);
+      });
+    }
+  )
+  .catch(function(err) {
+    console.log('Fetch Error :-S', err);
+  });
 
-}).eachPage(function page(records, fetchNextPage) {
+fetch('https://api.thingspeak.com/channels/1297821/feeds.json?api_key=Q5OWHXXDO0DFTGCA&days=7')
+  .then(
+    function(response) {
+      if (response.status !== 200) {
+        console.log('Looks like there was a problem. Status Code: ' +
+          response.status);
+        return;
+      }
 
-    records.forEach(function(record) {
-        mintemp.innerText = record.fields.Temperature + "ºC";
-        let recordDate = new Date(record._rawJson.createdTime)
-        mintempdate.innerText = recordDate.getDate() + "/" + (recordDate.getMonth() + 1) + "/" + recordDate.getFullYear();
-    });
+      // Examine the text in the response
+      response.json().then(function(data) {
 
-}, function done(err) {
-    if (err) { console.error(err); return; }
-});
+        var tempvshum = {
+            "$schema": "https://vega.github.io/schema/vega-lite/v4.json",
+            "title": "Temperature vs. Humidity (Week)",
+            "data": {
+                "values": data,
+                "format": {
+                    "type": "json",
+                    "property": "feeds"
+                } 
+            },
+            "width": "container",
+            "height": "container",
+            "encoding": {
+                "x": {
+                    "field": "created_at",
+                    "type": "temporal",
+                    "title": "Date"
+                    }
+                },
+            "layer": [
+            {
+                "mark": {
+                    "type": "bar",
+                    "color": "blue",
+                    "tooltip": true
+                },
+                "encoding": {
+                    "y": {
+                        "field": "field2",
+                        "type": "quantitative",
+                        "title": "% RH",
+                        "scale": {"zero": false}
+                    }
+                }
+            },
+            {
+                "mark": {
+                    "type": "line",
+                    "color": "red",
+                    "clip": true,
+                    "tooltip": true
+                },
+                "encoding": {
+                    "y": {
+                    "field": "field1",
+                    "type": "quantitative",
+                    "title": "Celsius",
+                    "scale": {"zero": false}
+                    }
+                }
+            }],
+            "resolve": {
+                "scale": {"y": "independent"}
+            }
+        };
+        
+        var tempvslux = {
+            "$schema": "https://vega.github.io/schema/vega-lite/v4.json",
+            "title": "Temperature vs. Light (Week)",
+            "data": {
+                "values": data,
+                "format": {
+                    "type": "json",
+                    "property": "feeds"
+                } 
+            },
+            "width": "container",
+            "height": "container",
+            "encoding": {
+                "x": {
+                    "field": "created_at",
+                    "type": "temporal",
+                    "title": "Date"
+                    }
+                },
+            "layer": [
+            {
+                "mark": {
+                    "type": "bar",
+                    "color": "orange",
+                    "interpolate": "monotone",
+                    "tooltip": true
+                },
+                "encoding": {
+                    "y": {
+                    "field": "field3",
+                    "aggregate": "mean",
+                    "type": "quantitative",
+                    "title": "Lux",
+                    "scale": {"zero": false}
+                    }
+                }
+            },
+            {
+                "mark": {
+                    "type": "line",
+                    "color": "red",
+                    "interpolate": "monotone",
+                    "clip": true,
+                    "tooltip": true
+                },
+                "encoding": {
+                    "y": {
+                    "field": "field1",
+                    "aggregate": "mean",
+                    "type": "quantitative",
+                    "title": "Celsius",
+                    "scale": {"zero": false}
+                    }
+                }
+                } 
+                ],
+                "resolve": {"scale": {"y": "independent"}}
+        };
+        
+        vegaEmbed('#tempvshum', tempvshum);
+        
+        vegaEmbed('#tempvslux', tempvslux);
+        
+      });
+    }
+  )
+  .catch(function(err) {
+    console.log('Fetch Error :-S', err);
+  });
