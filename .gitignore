@@ -1,5 +1,6 @@
-# Local Netlify folder
+# Netlify folders — don't know what works
 .netlify
+functions
 **/functions
 **/functions/getjson
 
