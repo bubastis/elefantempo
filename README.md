@@ -38,6 +38,6 @@ That's 31.5€ in total. These prices do not include shipping and handling, but 
 
 ## Future iterations
 
-* Smaller: seems like using a smaller board with better low-power functions (like the Wemos D1) would allow the station to run from a power bank for a few months. This would allow it to be posted on a balcony.
+* Smaller: seems like using a smaller board with better low-power functions (like the Wemos D1) would allow the station to run from a power bank for a few months. This would allow it to be posted on a balcony. A client-peripheral scheme using BLE or LoRa would also be much less power hungry than WiFi.
 * More complex: the Raspberry Pi Zero W and Google's Coral Environment Sensor can easily be coupled together (and cost some 40€). Using the Pi allows for adding beefier tasks, like a landscape camera, or dual microphones for measuring ambient noise, with maybe some machine learning on top.
 * Solar: a full solar power array would need a panel, some extra controllers, and a battery, preferably not Li-Po since they have issues charging under load (lead acid or LiFePo4 are better). The setup can cost up to 50€.
