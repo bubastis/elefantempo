@@ -1,8 +1,8 @@
 # Elefantempo
  
-_Elefantempo_ is the name of a weather station I started building in the summer of 2020. Weather stations are among the most popular Arduino projects you can find online, since they allow you to engage with basic circuit design, sensors, and a little bit of C++, while adding something mildly useful to one's home. They can range from basic termometers coupled with LCDs to fully-autonomous systems the size of a football.
+_Elefantempo_ is the name of a weather station I started building in the summer of 2020. Weather stations are among the most popular Arduino projects you can find online, since they allow you to engage with basic circuit design, sensors, and a little bit of C++, while adding something mildly useful to your home. They can range from basic thermometers coupled with LCDs to fully-autonomous systems the size of a football.
 
-This example uses an ESP8266 NodeMCU development board, a BME280 temperature, humidity and barometric pressure sensor, a BH1750 surface light sensor, and a 0.96" OLED display. Data points are sent to a Thingspeak channel every 5 minutes, and immediately forwarded to a Google Sheet and an Airtable. Thingspeak also runs a daily MATLAB analysis that calculates each day's maximum, minimum and averages. Finally, the Thingspeak API feeds a Netlify website with a set of charts, made with Vega-Lite.
+This example uses an ESP8266 NodeMCU development board, a BME280 temperature, humidity and barometric pressure sensor, a BH1750 surface light sensor, and a 0.96" OLED display. Measures are sent to a Thingspeak channel every 5 minutes, and immediately forwarded to a Google Sheet and an Airtable. Thingspeak also runs a daily MATLAB analysis that calculates each day's maximum, minimum and averages. Finally, the Thingspeak API feeds a Netlify website with a set of charts, made with Vega-Lite.
 
 ## The circuit
 
@@ -14,9 +14,13 @@ The circuit is still mounted to a breadboard, since I haven't yet decided if I s
 
 The sketch flashed to the Arduino is the file `elefantempo.ino` and it sits on the root of this repository. Since I was often connecting/disconnecting the board during the early days of the project, the first records were unevely timed. I then added a remote NTP clock check during setup, so the loop waits _exactly_ until the next 5-minute mark to start. After that, the clock service is disconnected and the loop is timed with `millis()`. 
 
+In the `thingspeak` folder, you can find instructions to send your data via a ThingHTTP function to Google Sheets or Airtable. Sending to Google Sheets requires an additional step - setting up a Google Apps script as intermediary (I copied and edited the one from [Storage B](https://github.com/StorageB/Google-Sheets-Logging)).
+
 ## The website
 
-![Elefantempo website](elefantempo-website.png)
+![Elefantempo website](screenshot.png)
+
+I initially just embedded Airtable's charts on a webpage, but they became too slow. Through Airtable's own add-ons, I became aware of the Vega-Lite library, which is quite flexible. The data is fetched from two Thingspeak channels (daily data and averages) using the REST API. A Netlify function based on "node-fetch" hides the API key.
 
 ## Previous iterations
 
