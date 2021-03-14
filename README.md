@@ -19,6 +19,7 @@ In the `thingspeak` folder, you can find instructions to send your data via a Th
 ## The website
 
 ![Elefantempo website](screenshot.png)
+https://elefantempo.netlify.app
 
 I initially just embedded Airtable's charts on a webpage, but they became too slow. Through Airtable's own add-ons, I became aware of the Vega-Lite library, which is quite flexible. The data is fetched from two Thingspeak channels (daily data and averages) using the REST API. A Netlify function based on "node-fetch" hides the API key.
 
