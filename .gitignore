@@ -2,3 +2,5 @@
 .netlify
 **/yarn.lock
 **/.DS_Store
+**/dist/airtable
+**/dist/airtablevega
