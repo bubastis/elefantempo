@@ -21,15 +21,15 @@ In the `thingspeak` folder, you can find instructions to send your data via a Th
 ![Elefantempo website](screenshot.png)
 https://elefantempo.netlify.app
 
-I initially just embedded Airtable's charts on a webpage, but they became too slow. Through Airtable's own add-ons, I became aware of the Vega-Lite library, which is quite flexible. The data is fetched from two Thingspeak channels (daily data and averages) using the REST API. A Netlify function based on "node-fetch" hides the API key.
+I initially just embedded Airtable's charts on a webpage, but they became too slow. Through Airtable's own add-ons, I became aware of the Vega-Lite library, which is quite flexible. The data is fetched from two Thingspeak channels (daily data and averages) using the REST API. A Netlify function based on `node-fetch` hides the API key.
 
 ## Previous iterations
 
 Before the current version, I also tried:
 
-* An Arduino Uno with a basic temperature sensor. I realised I didn't want to have it connected to my computer all the time and that I was interested in recording data over time.
-* A Seeduino Xiao with a DHT11, an RTC clock, and an SD Module. This worked autonomously rather well, but the RTC blinked too much, and I figured I didn't want to unplug the SD card and connect it to my computer whenever I wanted to check the measures.
-* An Arduino MKR1010 with a DHT11 and an OLED display. This worked for a few months, sending data to Airtable directly. However, it also failed every couple of days, forcing me to reset it. There is also a well-documented bug with the CHRG led that makes it blink out of the blue, which can be a pain in a dark room.
+1. An Arduino Uno with a basic temperature sensor. I realised I didn't want to have it connected to my computer all the time and that I was interested in recording data over time.
+2. A Seeduino Xiao with a DHT11, an RTC clock, and an SD Module. This worked autonomously rather well, but the RTC blinked too much, and I figured I didn't want to unplug the SD card and connect it to my computer whenever I wanted to check the measures.
+3. An Arduino MKR1010 with a DHT11 and an OLED display. This worked for a few months, sending data to Airtable directly. However, it also failed every couple of days, forcing me to reset it. There is also a well-documented bug with the CHRG led that makes it blink out of the blue, which can be a pain in a dark room.
 * I stopped at the current setup since it fits a single breadboard and has no blinking lights (also turned the OLED off for that reason). The NodeMCU can operate for weeks without errors. Moving to Thingspeak seems to have helped, and it is very easy to manipulate data once it's there. I changed the visualization from an embedded Airtable chart to Vega because it loads instantly on the page.
 
 ## Estimated hardware costs (in Euros)
