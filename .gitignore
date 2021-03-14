@@ -1,5 +1,8 @@
 # Local Netlify folder
 .netlify
+.functions
+
+# Other stuff
 **/yarn.lock
 **/.DS_Store
 **/dist/airtable
