@@ -1,4 +1,4 @@
 # Local Netlify folder
 .netlify
-yarn.lock
-.DS_Store
+**/yarn.lock
+**/.DS_Store
