@@ -1,6 +1,6 @@
 // Fetch year averages
 
-fetch('.netlify/functions/getjson?type=year')
+fetch('https://api.thingspeak.com/channels/1326754/feeds.json?api_key=Q5OWHXXDO0DFTGCA&results=300')
   .then(
     function(response) {
       if (response.status !== 200) {
@@ -11,7 +11,6 @@ fetch('.netlify/functions/getjson?type=year')
 
       // Examine the text in the response
       response.json().then(function(data) {
-
 
         // Get max & min
         let max = 0;
