@@ -1,6 +1,7 @@
 # Local Netlify folder
 .netlify
 **/functions
+**/functions/getjson
 
 # Other stuff
 **/yarn.lock
