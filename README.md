@@ -32,7 +32,7 @@ Before the current version, I also tried:
 * An Arduino MKR1010 with a DHT11 and an OLED display. This worked for a few months, sending data to Airtable directly. However, it also failed every couple of days, forcing me to reset it. There is also a well-documented bug with the CHRG led that makes it blink out of the blue, which can be a pain in a dark room.
 * I stopped at the current setup since it fits a single breadboard and has no blinking lights (also turned the OLED off for that reason). The NodeMCU can operate for weeks without errors. Moving to Thingspeak seems to have helped, and it is very easy to manipulate data once it's there. I changed the visualization from an embedded Airtable chart to Vega because it loads instantly on the page.
 
-## Estimated costs (in Euros)
+## Estimated hardware costs (in Euros)
 
 * NodeMCU (8€)
 * BME280 (6.5€)
