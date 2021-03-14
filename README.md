@@ -35,3 +35,9 @@ Before the current version, I also tried:
 * Breadboard (1€)
 
 That's 31.5€ in total. These prices do not include shipping and handling, but some stores will offer it for free if you buy these components together. All of them get cheaper if you buy in bulk, so the project could easily come down to 20€ if one were to make a few more. I also used the cable+charger from an old smartphone. 
+
+## Future iterations
+
+* Smaller: seems like using a smaller board with better low-power functions (like the Wemos D1) would allow the station to run from a power bank for a few months. This would allow it to be posted on a balcony.
+* More complex: the Raspberry Pi Zero W and Google's Coral Environment Sensor can easily be coupled together (and cost some 40€). Using the Pi allows for adding beefier tasks, like a landscape camera, or dual microphones for measuring ambient noise, with maybe some machine learning on top.
+* Solar: a full solar power array would need a panel, some extra controllers, and a battery, preferably not Li-Po since they have issues charging under load (lead acid or LiFePo4 are better). The setup can cost up to 50€.
