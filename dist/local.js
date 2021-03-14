@@ -1,6 +1,6 @@
 // Fetch year averages
 
-fetch('https://api.thingspeak.com/channels/1326754/feeds.json?api_key=Q5OWHXXDO0DFTGCA&results=300')
+fetch('.netlify/functions/getjson?type=year')
   .then(
     function(response) {
       if (response.status !== 200) {
@@ -140,7 +140,7 @@ fetch('https://api.thingspeak.com/channels/1326754/feeds.json?api_key=Q5OWHXXDO0
     console.log('Fetch Error :-S', err);
   });
 
-fetch('https://api.thingspeak.com/channels/1297821/feeds.json?api_key=Q5OWHXXDO0DFTGCA&days=7')
+fetch('.netlify/functions/getjson?type=week')
   .then(
     function(response) {
       if (response.status !== 200) {
