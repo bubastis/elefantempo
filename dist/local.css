@@ -5,7 +5,7 @@ body {
     font-family: -apple-system,system-ui,BlinkMacSystemFont,'Segoe UI',Roboto,Oxygen-Sans,Ubuntu,Cantarell,'Helvetica Neue',sans-serif,'Apple Color Emoji','Segoe UI Emoji','Segoe UI Symbol',sans-serif;
 }
 #container {
-    width: 80%;
+    width: 70%;
     margin: 0rem auto;
 }
 h1 {
@@ -28,7 +28,7 @@ h3 {
 }
 #charts {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr;
     gap: 1.5rem;
 }
 .chart {

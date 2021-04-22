@@ -36,7 +36,7 @@ fetch('.netlify/functions/getjson/?type=year')
         
         var tempVar = {
             "$schema": "https://vega.github.io/schema/vega-lite/v4.json",
-            "title": "Temperature Variation (Year)",
+            "title": "Daily Temperature Variation (Since September 2020)",
             "data": {
                 "values": data,
                 "format": {
@@ -83,7 +83,7 @@ fetch('.netlify/functions/getjson/?type=year')
 
         var humVar = {
             "$schema": "https://vega.github.io/schema/vega-lite/v4.json",
-            "title": "Humidity Variation (Year)",
+            "title": "Daily Humidity Variation (Since September 2020)",
             "data": {
                 "values": data,
                 "format": {
@@ -129,9 +129,48 @@ fetch('.netlify/functions/getjson/?type=year')
             }]
         };
 
+        var lxVar = {
+            "$schema": "https://vega.github.io/schema/vega-lite/v4.json",
+            "title": "Daily Average Light (Since March 2021)",
+            "data": {
+                "values": data,
+                "format": {
+                    "type": "json",
+                    "property": "feeds"
+                } 
+            },
+            "width": "container",
+            "height": "container",
+            "encoding": {
+                "x": {
+                    "field": "created_at",
+                    "type": "temporal",
+                    "title": "Date"
+                    }
+                },
+            "layer": [
+            {
+                "mark": {
+                    "type": "bar",
+                    "color": "orange",
+                    "tooltip": true
+                },
+                "encoding": {
+                    "y": {
+                        "field": "field7",
+                        "type": "quantitative",
+                        "title": "Lux",
+                        "scale": {"zero": false}
+                    }
+                }
+            }]
+        };
+
         vegaEmbed('#humvar', humVar);
 
         vegaEmbed('#tempvar', tempVar);
+
+        vegaEmbed('#lxvar', lxVar);
       });
     }
   )
@@ -153,7 +192,7 @@ fetch('.netlify/functions/getjson/?type=week')
 
         var tempvshum = {
             "$schema": "https://vega.github.io/schema/vega-lite/v4.json",
-            "title": "Temperature vs. Humidity (Week)",
+            "title": "Temperature & Humidity (Last week)",
             "data": {
                 "values": data,
                 "format": {
@@ -209,7 +248,7 @@ fetch('.netlify/functions/getjson/?type=week')
         
         var tempvslux = {
             "$schema": "https://vega.github.io/schema/vega-lite/v4.json",
-            "title": "Temperature vs. Light (Week)",
+            "title": "Temperature & Light (Last Week)",
             "data": {
                 "values": data,
                 "format": {
